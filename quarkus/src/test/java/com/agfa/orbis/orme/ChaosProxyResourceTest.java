@@ -3,35 +3,49 @@ package com.agfa.orbis.orme;
 import io.quarkus.test.junit.QuarkusTest;
 import io.restassured.builder.RequestSpecBuilder;
 import io.restassured.specification.RequestSpecification;
-import org.junit.Rule;
+import org.junit.jupiter.api.AfterEach;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
-import org.mockserver.junit.MockServerRule;
+import org.mockserver.integration.ClientAndServer;
 
 import static io.restassured.RestAssured.given;
-import static org.hamcrest.CoreMatchers.is;
+import static org.mockserver.integration.ClientAndServer.startClientAndServer;
+import static org.mockserver.model.HttpRequest.request;
+import static org.mockserver.model.HttpResponse.response;
 
 @QuarkusTest
 public class ChaosProxyResourceTest {
 
     private final RequestSpecification proxySpec = new RequestSpecBuilder().setProxy(8888).build();
 
-    private final static int MOCK_SERVER_PORT = 8889;
+    private final static int MOCK_SERVER_PORT = 1080;
 
-    @Rule
-    public MockServerRule mockServerRule = new MockServerRule(this, MOCK_SERVER_PORT);
+    private ClientAndServer mockServer;
+
+    @BeforeEach
+    public void startMockServer() {
+        mockServer = startClientAndServer(MOCK_SERVER_PORT);
+    }
+
+    @AfterEach
+    public void stopMockServer() {
+        mockServer.stop();
+    }
 
     @Test
     public void when_no_configuration_http_request_is_passed_through() {
         resetConfiguration();
 
+        mockServerResponding("/", "GET", 200);
+
         given()
                 .spec(proxySpec)
-                .log().all()
+//                .log().all()
                 .when()
-                .header("Accept", "text/html")
                 .get("http://localhost:" + MOCK_SERVER_PORT)
                 .then()
-                .log().all()
+//                .log().all()
                 .statusCode(200);
     }
 
@@ -39,21 +53,36 @@ public class ChaosProxyResourceTest {
     public void when_blocking_configuration_http_request_gets_500_response() {
         resetConfiguration();
 
+        mockServerResponding("/", "GET", 200);
+
         given()
                 .when()
-                .body("{ \"host\": \"schema.org\",\t\"blockOutgoingRequest\":true }")
-                .header("Accept", "text/html")
+                .header("Content-Type", "application/json")
+                .body("{ \"host\": \"localhost\",\t\"blockOutgoingRequest\":true }")
                 .put("resources/chaos/conf")
                 .then()
                 .statusCode(200);
 
         given()
                 .spec(proxySpec)
-                .log().all()
+//                .log().all()
                 .when().get("http://localhost:" + MOCK_SERVER_PORT)
                 .then()
-                .log().all()
+//                .log().all()
                 .statusCode(500);
+    }
+
+    private void mockServerResponding(String path, String method, int statusCode) {
+        mockServer
+                .when(
+                        request()
+                                .withMethod(method)
+                                .withPath(path)
+                )
+                .respond(
+                        response()
+                                .withStatusCode(statusCode)
+                );
     }
 
     private void resetConfiguration() {

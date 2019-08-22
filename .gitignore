@@ -6,6 +6,7 @@ bin/
 
 # IntelliJ
 .idea
+.idea/
 *.ipr
 *.iml
 *.iws
@@ -22,6 +23,7 @@ nb-configuration.xml
 # Vim
 *.swp
 *.swo
+*.*~
 
 # patch
 *.orig
