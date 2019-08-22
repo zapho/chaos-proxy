@@ -5,9 +5,9 @@ import io.restassured.builder.RequestSpecBuilder;
 import io.restassured.specification.RequestSpecification;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
-import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
 import org.mockserver.integration.ClientAndServer;
+import org.mockserver.socket.PortFactory;
 
 import static io.restassured.RestAssured.given;
 import static org.mockserver.integration.ClientAndServer.startClientAndServer;
@@ -19,7 +19,7 @@ public class ChaosProxyResourceTest {
 
     private final RequestSpecification proxySpec = new RequestSpecBuilder().setProxy(8888).build();
 
-    private final static int MOCK_SERVER_PORT = 1080;
+    private final static int MOCK_SERVER_PORT = PortFactory.findFreePort();
 
     private ClientAndServer mockServer;
 
