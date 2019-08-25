@@ -11,17 +11,16 @@
  */
 package com.agfa.orbis.orme;
 
-import io.netty.handler.codec.http.DefaultFullHttpResponse;
 import io.netty.handler.codec.http.DefaultHttpResponse;
 import io.netty.handler.codec.http.HttpHeaderNames;
 import io.netty.handler.codec.http.HttpHeaderValues;
-import io.netty.handler.codec.http.HttpHeaders;
 import io.netty.handler.codec.http.HttpObject;
 import io.netty.handler.codec.http.HttpRequest;
 import io.netty.handler.codec.http.HttpResponse;
 import io.netty.handler.codec.http.HttpResponseStatus;
 import io.netty.handler.codec.http.HttpVersion;
 import io.netty.handler.codec.http.LastHttpContent;
+import org.apache.commons.lang3.RandomUtils;
 import org.littleshoot.proxy.HttpFilters;
 import org.littleshoot.proxy.HttpFiltersAdapter;
 import org.littleshoot.proxy.HttpFiltersSourceAdapter;
@@ -39,6 +38,9 @@ public class HttpChaosInterceptor extends HttpFiltersSourceAdapter {
     @Inject
     ProxyConfigurationService configurationService;
 
+    @Inject
+    LoggerService loggerService;
+
     @Override public HttpFilters filterRequest(HttpRequest originalRequest) {
         return new HttpFiltersAdapter(originalRequest) {
 
@@ -46,6 +48,7 @@ public class HttpChaosInterceptor extends HttpFiltersSourceAdapter {
             public HttpResponse clientToProxyRequest(HttpObject httpObject) {
                 String uri = originalRequest.uri();
                 LOG.trace(uri);
+                loggerService.log(LogLevel.TRACE, uri);
                 return configurationService.getConfiguration(uri)
                         .map(conf -> unleashHttpChaos(uri, httpObject, conf)) // URI & conf matching > introduce issues in HTTP request/response
                         .orElse(null); // no conf matching URI > do not mingle with HTTP
@@ -58,19 +61,24 @@ public class HttpChaosInterceptor extends HttpFiltersSourceAdapter {
         if (httpObject instanceof LastHttpContent) {
             return null;
         }
+        double badLuck = RandomUtils.nextDouble(0.0, 1.0);
+        if (badLuck < conf.getErrorRate()) {
+            if (conf.isBlockingOutgoingRequest()) {
 
-        if (conf.isBlockOutgoingRequest()) {
-            LOG.info(">> Blocking call to {}", uri);
-            DefaultHttpResponse err500 = new DefaultHttpResponse(HttpVersion.HTTP_1_1, HttpResponseStatus.INTERNAL_SERVER_ERROR);
-            err500.headers().set(HttpHeaderNames.CONNECTION, HttpHeaderValues.CLOSE);
-            return err500;
-        } else if (conf.getLatencyInMs() > 0) {
-            try {
-                LOG.info(">> Latency of {} introduced for call to {}", conf.getLatencyInMs(), uri);
-                Thread.sleep(conf.getLatencyInMs());
-                return null;
-            } catch (InterruptedException e) {
-                throw new RuntimeException(e);
+                LOG.info(">> Blocking call to {}", uri);
+                loggerService.log(LogLevel.INFO, ">> Blocking call to " + uri);
+                DefaultHttpResponse err500 = new DefaultHttpResponse(HttpVersion.HTTP_1_1, HttpResponseStatus.INTERNAL_SERVER_ERROR);
+                err500.headers().set(HttpHeaderNames.CONNECTION, HttpHeaderValues.CLOSE);
+                return err500;
+            } else if (conf.getLatencyInMs() > 0) {
+                try {
+                    LOG.info(">> Latency of {} introduced for call to {}", conf.getLatencyInMs(), uri);
+                    loggerService.log(LogLevel.INFO, ">> Latency of " + conf.getLatencyInMs() + " introduced for call to " + uri);
+                    Thread.sleep(conf.getLatencyInMs());
+                    return null;
+                } catch (InterruptedException e) {
+                    throw new RuntimeException(e);
+                }
             }
         }
         return null;

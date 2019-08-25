@@ -19,16 +19,13 @@ import org.littleshoot.proxy.impl.DefaultHttpProxyServer;
 import org.littleshoot.proxy.impl.ThreadPoolConfiguration;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.slf4j.helpers.MessageFormatter;
 
 import javax.enterprise.context.ApplicationScoped;
 import javax.enterprise.event.Observes;
 import javax.inject.Inject;
-import javax.json.Json;
-import javax.json.JsonObject;
-import javax.json.JsonReader;
 import javax.json.bind.JsonbBuilder;
 import java.io.FileInputStream;
-import java.io.InputStream;
 
 @ApplicationScoped
 public class LifecycleManager {
@@ -48,6 +45,9 @@ public class LifecycleManager {
 
     @Inject
     ProxyConfigurationService configurationService;
+
+    @Inject
+    LoggerService loggerService;
 
     void onStart(@Observes StartupEvent ev) {
         if (proxyPort > 0) {
@@ -77,10 +77,17 @@ public class LifecycleManager {
         if (configFile != null) {
             try {
                 ProxyConfiguration proxyConfiguration = JsonbBuilder.create().fromJson(new FileInputStream(configFile), ProxyConfiguration.class);
-                configurationService.setConfiguration(proxyConfiguration);
-                LOG.info("Loaded config file from {}", configFile);
+                if (proxyConfiguration.isValid()) {
+                    LOG.info("Load config file from {}", configFile);
+                    loggerService.log(LogLevel.INFO, "Load config file from " + configFile);
+                    configurationService.setConfiguration(proxyConfiguration);
+                } else {
+                    LOG.warn("Unable to load configuration file {}, error: invalid configuration", configFile);
+                    loggerService.log(LogLevel.WARN, MessageFormatter.format("Unable to load configuration file {}, error: invalid configuration", configFile).getMessage());
+                }
             } catch (Exception e) {
                 LOG.warn("Unable to load configuration file {}, error: {}", configFile, e.getMessage());
+                loggerService.log(LogLevel.WARN, MessageFormatter.format("Unable to load configuration file {}, error: {}", configFile, e.getMessage()).getMessage());
             }
         }
     }

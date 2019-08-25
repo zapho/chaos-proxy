@@ -12,25 +12,30 @@
 package com.agfa.orbis.orme;
 
 import javax.json.bind.annotation.JsonbProperty;
+import javax.json.bind.annotation.JsonbPropertyOrder;
 import javax.json.bind.annotation.JsonbTransient;
+import javax.json.bind.config.PropertyOrderStrategy;
 import java.util.Objects;
 
+@JsonbPropertyOrder(PropertyOrderStrategy.LEXICOGRAPHICAL)
 public class ProxyConfiguration {
-
+    @JsonbProperty("host")
     private String host;
-    private boolean isBlockOutgoingRequest = false;
-    private int latencyInMs = -1;
-
-    @JsonbProperty("isBlockOutgoingRequest")
-    public boolean isBlockOutgoingRequest() {
-        return isBlockOutgoingRequest;
-    }
-
-    public void setBlockOutgoingRequest(boolean blockOutgoingRequest) {
-        this.isBlockOutgoingRequest = blockOutgoingRequest;
-    }
-
+    @JsonbProperty("blockOutgoingRequest")
+    private Boolean blockingOutgoingRequest = false;
     @JsonbProperty("latencyInMs")
+    private int latencyInMs = -1;
+    @JsonbProperty("errorRate")
+    private double errorRate = 1;
+
+    public boolean isBlockingOutgoingRequest() {
+        return this.blockingOutgoingRequest;
+    }
+
+    public void setBlockingOutgoingRequest(boolean blockingOutgoingRequest) {
+        this.blockingOutgoingRequest = blockingOutgoingRequest;
+    }
+
     public long getLatencyInMs() {
         return latencyInMs;
     }
@@ -39,13 +44,22 @@ public class ProxyConfiguration {
         this.latencyInMs = latencyInMs;
     }
 
-    @JsonbProperty("host")
     public String getHost() {
         return host;
     }
 
     public void setHost(String host) {
         this.host = Objects.requireNonNull(host);
+    }
+
+    public double getErrorRate() {
+        return errorRate;
+    }
+
+    public void setErrorRate(double errorRate) {
+        if (errorRate > 0 && errorRate <= 1) {
+            this.errorRate = errorRate;
+        }
     }
 
     @JsonbTransient
@@ -64,5 +78,14 @@ public class ProxyConfiguration {
 
     @Override public int hashCode() {
         return Objects.hash(host);
+    }
+
+    @Override public String toString() {
+        return "ProxyConfiguration{" +
+                "host='" + host + '\'' +
+                ", blockOutgoingRequest=" + blockingOutgoingRequest +
+                ", latencyInMs=" + latencyInMs +
+                ", errorRate=" + errorRate +
+                '}';
     }
 }

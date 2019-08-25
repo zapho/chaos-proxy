@@ -12,6 +12,7 @@
 package com.agfa.orbis.orme;
 
 import javax.enterprise.context.ApplicationScoped;
+import javax.inject.Inject;
 import java.util.Collections;
 import java.util.List;
 import java.util.Optional;
@@ -19,6 +20,9 @@ import java.util.concurrent.CopyOnWriteArrayList;
 
 @ApplicationScoped
 public class ProxyConfigurationService {
+
+    @Inject
+    LoggerService loggerService;
 
     List<ProxyConfiguration> conf = new CopyOnWriteArrayList<>();
 
@@ -44,9 +48,11 @@ public class ProxyConfigurationService {
             conf.remove(configuration);
         }
         conf.add(configuration);
+        loggerService.log(LogLevel.INFO, "Proxy configuration added/changed: " + configuration.toString());
     }
 
     public void removeConfiguration() {
+        loggerService.log(LogLevel.INFO, "Proxy configuration removed (all entries)");
         conf.clear();
     }
 }
