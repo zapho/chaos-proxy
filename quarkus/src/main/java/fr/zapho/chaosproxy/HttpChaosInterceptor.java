@@ -9,7 +9,7 @@
  *        The copyright notice above does not evidence any
  *       actual or intended publication of such source code.
  */
-package com.agfa.orbis.orme;
+package fr.zapho.chaosproxy;
 
 import io.netty.handler.codec.http.DefaultHttpResponse;
 import io.netty.handler.codec.http.HttpHeaderNames;

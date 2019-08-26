@@ -1,4 +1,4 @@
-package com.agfa.orbis.orme;
+package fr.zapho.chaosproxy;
 
 import io.quarkus.test.junit.QuarkusTest;
 import io.restassured.builder.RequestSpecBuilder;

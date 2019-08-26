@@ -1,4 +1,4 @@
-package com.agfa.orbis.orme;
+package fr.zapho.chaosproxy;
 
 import javax.ws.rs.GET;
 import javax.ws.rs.Path;

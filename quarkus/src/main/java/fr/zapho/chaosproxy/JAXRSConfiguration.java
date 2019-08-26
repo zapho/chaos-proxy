@@ -1,4 +1,4 @@
-package com.agfa.orbis.orme;
+package fr.zapho.chaosproxy;
 
 import javax.ws.rs.ApplicationPath;
 import javax.ws.rs.core.Application;

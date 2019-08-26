@@ -9,7 +9,7 @@
  *        The copyright notice above does not evidence any
  *       actual or intended publication of such source code.
  */
-package com.agfa.orbis.orme;
+package fr.zapho.chaosproxy;
 
 import io.quarkus.runtime.ShutdownEvent;
 import io.quarkus.runtime.StartupEvent;
@@ -19,7 +19,6 @@ import org.littleshoot.proxy.impl.DefaultHttpProxyServer;
 import org.littleshoot.proxy.impl.ThreadPoolConfiguration;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.slf4j.helpers.MessageFormatter;
 
 import javax.enterprise.context.ApplicationScoped;
 import javax.enterprise.event.Observes;
