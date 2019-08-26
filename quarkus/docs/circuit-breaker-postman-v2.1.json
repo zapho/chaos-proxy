@@ -1,0 +1,110 @@
+{
+	"info": {
+		"_postman_id": "4c3c5f4b-b23b-48de-83e2-0d72aae68426",
+		"name": "Chaos proxy",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "read conf",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:18080/resources/chaos/conf",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "18080",
+					"path": [
+						"resources",
+						"chaos",
+						"conf"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "change conf",
+			"request": {
+				"method": "PUT",
+				"header": [
+					{
+						"key": "Content-Type",
+						"name": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n\t\"host\": \"schema.org\",\r\n\t\"errorRate\": 0.2,\r\n\t\"blockOutgoingRequest\": true,\r\n\t\"latencyInMs\": -1\r\n}"
+				},
+				"url": {
+					"raw": "http://localhost:18080/resources/chaos/conf",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "18080",
+					"path": [
+						"resources",
+						"chaos",
+						"conf"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "delete conf",
+			"request": {
+				"method": "DELETE",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:18080/resources/chaos/conf",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "18080",
+					"path": [
+						"resources",
+						"chaos",
+						"conf"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "read logs",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:18080/resources/chaos/logs?lvl=info",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "18080",
+					"path": [
+						"resources",
+						"chaos",
+						"logs"
+					],
+					"query": [
+						{
+							"key": "lvl",
+							"value": "info"
+						}
+					]
+				}
+			},
+			"response": []
+		}
+	]
+}

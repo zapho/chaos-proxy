@@ -1,0 +1,417 @@
+{
+    "_type": "export",
+    "__export_format": 4,
+    "__export_date": "2019-08-26T16:26:34.177Z",
+    "__export_source": "insomnia.desktop.app:v6.6.2",
+    "resources": [{
+            "_id": "req_5ab8aa3751ca4287a8636c04032314db",
+            "authentication": {
+                "disabled": false,
+                "password": "a",
+                "type": "basic",
+                "username": "AP-HP/AGFA"
+            },
+            "body": {
+                "mimeType": "application/json",
+                "text": "{\n\t\"host\": \"schema.org\",\n\t\"errorRate\": 0.2,\n\t\"blockOutgoingRequest\": true,\n\t\"latencyInMs\": -1\n}"
+            },
+            "created": 1553787178433,
+            "description": "",
+            "headers": [{
+                    "id": "pair_8030c5cec95d4466b9d16210828c4622",
+                    "name": "Content-Type",
+                    "value": "application/json"
+                }
+            ],
+            "isPrivate": false,
+            "metaSortKey": -1559516914947.5,
+            "method": "PUT",
+            "modified": 1566835806062,
+            "name": "write",
+            "parameters": [],
+            "parentId": "fld_806a222533244284ae8dc588d0f4499e",
+            "settingDisableRenderRequestBody": false,
+            "settingEncodeUrl": true,
+            "settingRebuildPath": true,
+            "settingSendCookies": true,
+            "settingStoreCookies": true,
+            "url": "http://localhost:18080/resources/chaos/conf",
+            "_type": "request"
+        }, {
+            "_id": "fld_806a222533244284ae8dc588d0f4499e",
+            "created": 1565246651462,
+            "description": "",
+            "environment": {},
+            "environmentPropertyOrder": null,
+            "metaSortKey": -1565246651462,
+            "modified": 1565246651462,
+            "name": "chaos-proxy",
+            "parentId": "fld_f85690f3af6444f1a68c61572ad8dd72",
+            "_type": "request_group"
+        }, {
+            "_id": "fld_f85690f3af6444f1a68c61572ad8dd72",
+            "created": 1553787135954,
+            "description": "",
+            "environment": {},
+            "environmentPropertyOrder": null,
+            "metaSortKey": -1553787135954,
+            "modified": 1553787135954,
+            "name": "sandbox",
+            "parentId": "wrk_baa5d324b49c4bc4a96a1ce655bca82d",
+            "_type": "request_group"
+        }, {
+            "_id": "wrk_baa5d324b49c4bc4a96a1ce655bca82d",
+            "created": 1527669952493,
+            "description": "",
+            "modified": 1527669952493,
+            "name": "Insomnia",
+            "parentId": null,
+            "_type": "workspace"
+        }, {
+            "_id": "req_90147779fedb4404bcb5027d8e5b50e4",
+            "authentication": {
+                "disabled": false,
+                "password": "a",
+                "type": "basic",
+                "username": "AP-HP/AGFA"
+            },
+            "body": {
+                "mimeType": "application/json",
+                "text": ""
+            },
+            "created": 1564386210025,
+            "description": "",
+            "headers": [{
+                    "id": "pair_8030c5cec95d4466b9d16210828c4622",
+                    "name": "Content-Type",
+                    "value": "application/json"
+                }
+            ],
+            "isPrivate": false,
+            "metaSortKey": -1559516914922.5,
+            "method": "DELETE",
+            "modified": 1565246688286,
+            "name": "delete",
+            "parameters": [],
+            "parentId": "fld_806a222533244284ae8dc588d0f4499e",
+            "settingDisableRenderRequestBody": false,
+            "settingEncodeUrl": true,
+            "settingRebuildPath": true,
+            "settingSendCookies": true,
+            "settingStoreCookies": true,
+            "url": "http://localhost:18080/resources/chaos/conf",
+            "_type": "request"
+        }, {
+            "_id": "req_3624ef2fcebd4d0d8d882a80068dcf77",
+            "authentication": {
+                "disabled": false,
+                "password": "a",
+                "type": "basic",
+                "username": "AP-HP/AGFA"
+            },
+            "body": {
+                "mimeType": "application/json",
+                "text": ""
+            },
+            "created": 1562362464887,
+            "description": "",
+            "headers": [{
+                    "id": "pair_8030c5cec95d4466b9d16210828c4622",
+                    "name": "Content-Type",
+                    "value": "application/json"
+                }
+            ],
+            "isPrivate": false,
+            "metaSortKey": -1559516914897.5,
+            "method": "GET",
+            "modified": 1566565911154,
+            "name": "conf",
+            "parameters": [],
+            "parentId": "fld_806a222533244284ae8dc588d0f4499e",
+            "settingDisableRenderRequestBody": false,
+            "settingEncodeUrl": true,
+            "settingRebuildPath": true,
+            "settingSendCookies": true,
+            "settingStoreCookies": true,
+            "url": "http://localhost:18080/resources/chaos/conf",
+            "_type": "request"
+        }, {
+            "_id": "req_f004c2a895cc44658699b8dd07c25406",
+            "authentication": {
+                "disabled": false,
+                "password": "a",
+                "type": "basic",
+                "username": "AP-HP/AGFA"
+            },
+            "body": {
+                "mimeType": "application/json",
+                "text": ""
+            },
+            "created": 1566479336761,
+            "description": "",
+            "headers": [{
+                    "id": "pair_8030c5cec95d4466b9d16210828c4622",
+                    "name": "Content-Type",
+                    "value": "application/json"
+                }
+            ],
+            "isPrivate": false,
+            "metaSortKey": -1557624513641.125,
+            "method": "GET",
+            "modified": 1566821734023,
+            "name": "logs",
+            "parameters": [],
+            "parentId": "fld_806a222533244284ae8dc588d0f4499e",
+            "settingDisableRenderRequestBody": false,
+            "settingEncodeUrl": true,
+            "settingRebuildPath": true,
+            "settingSendCookies": true,
+            "settingStoreCookies": true,
+            "url": "http://localhost:18080/resources/chaos/logs?lvl=info",
+            "_type": "request"
+        }, {
+            "_id": "env_81db1666f36b4ed38516a0e015ef3dd0",
+            "color": null,
+            "created": 1527669952524,
+            "data": {
+                "auth_token_007_AGFA": "MDA3L0FHRkE6YQ==",
+                "auth_token_AGFA": "QUdGQTph",
+                "auth_token_PRESC": "UFJFU0M6cA==",
+                "auth_token_SCHULUNG": "U0NIVUxVTkc6c2NodWx1bmc=",
+                "auth_token_TA_ORME_ADMIN": "VEFfT1JNRV9BRE1JTjp0"
+            },
+            "dataPropertyOrder": null,
+            "isPrivate": false,
+            "metaSortKey": 1536233507853,
+            "modified": 1536233569593,
+            "name": "New Environment",
+            "parentId": "wrk_baa5d324b49c4bc4a96a1ce655bca82d",
+            "_type": "environment"
+        }, {
+            "_id": "jar_cd38d12649394a1fa1fbe0d445446c57",
+            "cookies": [{
+                    "creation": "2019-02-20T15:15:07.679Z",
+                    "domain": "bodsuv063.agfahealthcare.com",
+                    "hostOnly": true,
+                    "id": "7404207421465072",
+                    "key": "JSESSIONID",
+                    "lastAccessed": "2019-03-04T13:59:32.987Z",
+                    "path": "/orme",
+                    "value": "Q37EgmS-PWE3Bh9_h_KU0rCDR1YPvEYo-5hC6p18.bodswv116"
+                }, {
+                    "creation": "2019-02-20T15:15:07.679Z",
+                    "domain": "bodsuv063.agfahealthcare.com",
+                    "hostOnly": true,
+                    "httpOnly": true,
+                    "id": "0093879892496187",
+                    "key": "OAuth_Token_Request_State",
+                    "lastAccessed": "2019-03-04T13:59:32.987Z",
+                    "path": "/auth/realms/orbis/protocol/openid-connect",
+                    "pathIsDefault": true,
+                    "value": "415869eb-b57d-4de3-9195-520549809720"
+                }, {
+                    "creation": "2019-02-20T15:15:07.679Z",
+                    "domain": "bodsuv063.agfahealthcare.com",
+                    "extensions": ["Version=1"],
+                    "hostOnly": true,
+                    "httpOnly": true,
+                    "id": "6554775915188975",
+                    "key": "AUTH_SESSION_ID",
+                    "lastAccessed": "2019-03-04T13:59:32.989Z",
+                    "path": "/auth/realms/orbis",
+                    "value": "108f5eca-55df-4b2a-8c8c-3dfb2f4662eb.436413696ded"
+                }, {
+                    "creation": "2019-02-20T15:15:07.679Z",
+                    "domain": "bodsuv063.agfahealthcare.com",
+                    "extensions": ["Version=1"],
+                    "hostOnly": true,
+                    "httpOnly": true,
+                    "id": "5570649831641401",
+                    "key": "KC_RESTART",
+                    "lastAccessed": "2019-03-04T13:59:32.989Z",
+                    "path": "/auth/realms/orbis",
+                    "value": "eyJhbGciOiJIUzI1NiIsImtpZCIgOiAiMzRiODUwNjUtN2ZmOS00ZDk2LTkwMmEtMGQzZmRkY2U5ZjVkIn0.eyJjaWQiOiJvcmJpcy11LXdlYmNsaWVudCIsInB0eSI6Im9wZW5pZC1jb25uZWN0IiwicnVyaSI6Imh0dHBzOi8vYm9kc3V2MDYzLmFnZmFoZWFsdGhjYXJlLmNvbS9vcm1lL3Jlc291cmNlcy9pbnRlcm5hbC9zZWFyY2gvc3RhdHVzIiwiYWN0IjoiQVVUSEVOVElDQVRFIiwibm90ZXMiOnsic2NvcGUiOiJvcGVuaWQiLCJpc3MiOiJodHRwczovL2JvZHN1djA2My5hZ2ZhaGVhbHRoY2FyZS5jb20vYXV0aC9yZWFsbXMvb3JiaXMiLCJyZXNwb25zZV90eXBlIjoiY29kZSIsImNvZGVfY2hhbGxlbmdlX21ldGhvZCI6InBsYWluIiwicmVkaXJlY3RfdXJpIjoiaHR0cHM6Ly9ib2RzdXYwNjMuYWdmYWhlYWx0aGNhcmUuY29tL29ybWUvcmVzb3VyY2VzL2ludGVybmFsL3NlYXJjaC9zdGF0dXMiLCJzdGF0ZSI6IjQxNTg2OWViLWI1N2QtNGRlMy05MTk1LTUyMDU0OTgwOTcyMCIsImNsaWVudF9yZXF1ZXN0X3BhcmFtX2xvZ2luIjoidHJ1ZSJ9fQ.RWoTIeNVwe2gwZzFf9NbQfG4a4OCHrCthiBC1Dubn-8"
+                }, {
+                    "creation": "2019-03-28T15:34:07.661Z",
+                    "domain": "agfa.be",
+                    "hostOnly": false,
+                    "id": "6876025452765404",
+                    "key": "dtCookie",
+                    "lastAccessed": "2019-03-28T15:34:07.661Z",
+                    "path": "/",
+                    "value": "1795AF9A157588771625AFEB8F73A0D2|X2RlZmF1bHR8MQ"
+                }, {
+                    "creation": "2019-06-25T07:48:26.990Z",
+                    "domain": "morswhv166.agfahealthcare.com",
+                    "expires": "2019-06-25T08:01:14.000Z",
+                    "hostOnly": true,
+                    "httpOnly": true,
+                    "id": "9827790563799272",
+                    "key": "oas_scheduler_context",
+                    "lastAccessed": "2019-06-25T07:56:14.581Z",
+                    "maxAge": 300,
+                    "path": "/",
+                    "secure": true,
+                    "value": "default"
+                }
+            ],
+            "created": 1527669952612,
+            "modified": 1561449374581,
+            "name": "Default Jar",
+            "parentId": "wrk_baa5d324b49c4bc4a96a1ce655bca82d",
+            "_type": "cookie_jar"
+        }, {
+            "_id": "env_4f014967ec8d45a69a7844bfb9348529",
+            "color": null,
+            "created": 1527670205196,
+            "data": {
+                "host": "localhost",
+                "http_type": "http",
+                "port": "8080"
+            },
+            "dataPropertyOrder": null,
+            "isPrivate": false,
+            "metaSortKey": 4,
+            "modified": 1565252590819,
+            "name": "dev_machine",
+            "parentId": "env_81db1666f36b4ed38516a0e015ef3dd0",
+            "_type": "environment"
+        }, {
+            "_id": "env_fb2286fd45fa47bdaf9c2039ab66f12a",
+            "color": null,
+            "created": 1527673351713,
+            "data": {
+                "host": "localhost",
+                "http_type": "https",
+                "port": "8443"
+            },
+            "dataPropertyOrder": null,
+            "isPrivate": false,
+            "metaSortKey": 0,
+            "modified": 1565252590804,
+            "name": "dev_machine_https",
+            "parentId": "env_81db1666f36b4ed38516a0e015ef3dd0",
+            "_type": "environment"
+        }, {
+            "_id": "env_ef807e31755648c5b9b6f371d4f7f9a4",
+            "color": null,
+            "created": 1527697715542,
+            "data": {
+                "host": "localhost",
+                "http_type": "http",
+                "port": "9080"
+            },
+            "dataPropertyOrder": null,
+            "isPrivate": false,
+            "metaSortKey": 5,
+            "modified": 1565252590821,
+            "name": "dev_machine_2",
+            "parentId": "env_81db1666f36b4ed38516a0e015ef3dd0",
+            "_type": "environment"
+        }, {
+            "_id": "env_3620b46148c44cfb85fcf65fe6d8db30",
+            "color": null,
+            "created": 1527698206672,
+            "data": {
+                "host": "localhost",
+                "http_type": "https",
+                "port": "9443"
+            },
+            "dataPropertyOrder": null,
+            "isPrivate": false,
+            "metaSortKey": 3,
+            "modified": 1565252590817,
+            "name": "dev_machine_2_https",
+            "parentId": "env_81db1666f36b4ed38516a0e015ef3dd0",
+            "_type": "environment"
+        }, {
+            "_id": "env_1f8198f884ad4356b09f2541f7ff82c5",
+            "color": null,
+            "created": 1529397334225,
+            "data": {
+                "host": "morswhv166.agfahealthcare.com",
+                "http_type": "https",
+                "port": "8843"
+            },
+            "dataPropertyOrder": {
+                "&": ["host", "http_type", "port"]
+            },
+            "isPrivate": false,
+            "metaSortKey": 2,
+            "modified": 1565252590813,
+            "name": "QA - morswhv166",
+            "parentId": "env_81db1666f36b4ed38516a0e015ef3dd0",
+            "_type": "environment"
+        }, {
+            "_id": "env_0b4b115954b64580a79c0c3fd6c846ce",
+            "color": null,
+            "created": 1529400557277,
+            "data": {
+                "host": "morwj767.agfahealthcare.com",
+                "http_type": "https",
+                "port": "8743"
+            },
+            "dataPropertyOrder": {
+                "&": ["host", "http_type", "port"]
+            },
+            "isPrivate": false,
+            "metaSortKey": 6,
+            "modified": 1565252590826,
+            "name": "DEV 84 FR Trunk",
+            "parentId": "env_81db1666f36b4ed38516a0e015ef3dd0",
+            "_type": "environment"
+        }, {
+            "_id": "env_f262a0bcd05d44788272e62b21108ad7",
+            "color": null,
+            "created": 1550675644816,
+            "data": {
+                "host": "bodsuv063.agfahealthcare.com",
+                "http_type": "https",
+                "port": "443"
+            },
+            "dataPropertyOrder": null,
+            "isPrivate": false,
+            "metaSortKey": 1,
+            "modified": 1565252590809,
+            "name": "Keycloak test env BOD",
+            "parentId": "env_81db1666f36b4ed38516a0e015ef3dd0",
+            "_type": "environment"
+        }, {
+            "_id": "env_556b30e1751b48bfac02b42367095e5f",
+            "color": null,
+            "created": 1565252545409,
+            "data": {
+                "host": "bodswv113.agfahealthcare.com",
+                "http_type": "https",
+                "port": "8943"
+            },
+            "dataPropertyOrder": {
+                "&": ["host", "http_type", "port"]
+            },
+            "isPrivate": false,
+            "metaSortKey": 7,
+            "modified": 1565252590829,
+            "name": "DEV 85 FR Trunk",
+            "parentId": "env_81db1666f36b4ed38516a0e015ef3dd0",
+            "_type": "environment"
+        }, {
+            "_id": "env_01d5f38ed8824efa9d97031a5214fa44",
+            "color": null,
+            "created": 1565252596114,
+            "data": {
+                "host": "bodswv112.agfahealthcare.com",
+                "http_type": "https",
+                "port": "8843"
+            },
+            "dataPropertyOrder": {
+                "&": ["host", "http_type", "port"]
+            },
+            "isPrivate": false,
+            "metaSortKey": 1565252596114,
+            "modified": 1565252631967,
+            "name": "DEV 84 DACHL Trunk",
+            "parentId": "env_81db1666f36b4ed38516a0e015ef3dd0",
+            "_type": "environment"
+        }
+    ]
+}
