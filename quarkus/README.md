@@ -63,6 +63,10 @@ favorite REST tool
     ```bash
     GET http://localhost:18080/resources/chaos/logs?lvl=info
     ```
+    By default, proxy events are logged at the INFO level. To see all requests going through the proxy level must be set to TRACE:
+    ```bash
+    java -Dquarkus.log.category.\"com.agfa.orbis.orme\".level=TRACE -jar chaos-proxy-runner.jar
+    ``` 
  
   - Optionally, a configuration can be specified at startup:
     ```bash

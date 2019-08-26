@@ -11,6 +11,9 @@
  */
 package com.agfa.orbis.orme;
 
+import org.slf4j.Logger;
+import org.slf4j.helpers.MessageFormatter;
+
 import javax.enterprise.context.ApplicationScoped;
 import java.util.List;
 import java.util.Optional;
@@ -22,12 +25,6 @@ import java.util.stream.Collectors;
 public class LoggerService {
     List<Log> logs = new CopyOnWriteArrayList<>();
 
-    public void log(LogLevel level, String msg) {
-        if (level != null && msg != null && !msg.isEmpty()) {
-            logs.add(new Log(level, msg));
-        }
-    }
-
     public List<String> getLogs(String levelStr) {
         Optional<LogLevel> levelOpt = LogLevel.from(levelStr);
         Predicate<Log> logsWithProperRank = (Log log) -> levelOpt.map(l -> log.getLevel().getRank() >= l.getRank()).orElse(true);
@@ -36,5 +33,50 @@ public class LoggerService {
                 .filter(logsWithProperRank)
                 .map(l -> l.message())
                 .collect(Collectors.toList());
+    }
+
+    public void log(LogLevel level, Logger logger, String msg, Object... args) {
+        if (level == null || msg == null || msg.isEmpty() || !shouldLog(level, logger)) {
+            return;
+        }
+        String formattedMsg = MessageFormatter.format(msg, args).getMessage();
+        logs.add(new Log(level, formattedMsg));
+        switch (level) {
+            case TRACE:
+                logger.trace(formattedMsg);
+                break;
+            case DEBUG:
+                logger.debug(formattedMsg);
+                break;
+            case INFO:
+                logger.info(formattedMsg);
+                break;
+            case WARN:
+                logger.warn(formattedMsg);
+                break;
+            case ERROR:
+                logger.error(formattedMsg);
+                break;
+            default:
+                logger.error(formattedMsg);
+                break;
+        }
+    }
+
+    private boolean shouldLog(LogLevel level, Logger logger) {
+        switch (level) {
+            case TRACE:
+                return logger.isTraceEnabled();
+            case DEBUG:
+                return logger.isDebugEnabled();
+            case INFO:
+                return logger.isInfoEnabled();
+            case WARN:
+                return logger.isWarnEnabled();
+            case ERROR:
+                return logger.isErrorEnabled();
+            default:
+                return false;
+        }
     }
 }

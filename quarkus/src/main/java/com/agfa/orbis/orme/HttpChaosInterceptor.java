@@ -33,7 +33,7 @@ import javax.inject.Inject;
 @ApplicationScoped
 public class HttpChaosInterceptor extends HttpFiltersSourceAdapter {
 
-    private static Logger LOG = LoggerFactory.getLogger(HttpChaosInterceptor.class);
+    private final static Logger LOG = LoggerFactory.getLogger(HttpChaosInterceptor.class);
 
     @Inject
     ProxyConfigurationService configurationService;
@@ -47,8 +47,7 @@ public class HttpChaosInterceptor extends HttpFiltersSourceAdapter {
             @Override
             public HttpResponse clientToProxyRequest(HttpObject httpObject) {
                 String uri = originalRequest.uri();
-                LOG.trace(uri);
-                loggerService.log(LogLevel.TRACE, uri);
+                loggerService.log(LogLevel.TRACE, LOG, uri);
                 return configurationService.getConfiguration(uri)
                         .map(conf -> unleashHttpChaos(uri, httpObject, conf)) // URI & conf matching > introduce issues in HTTP request/response
                         .orElse(null); // no conf matching URI > do not mingle with HTTP
@@ -65,15 +64,13 @@ public class HttpChaosInterceptor extends HttpFiltersSourceAdapter {
         if (badLuck < conf.getErrorRate()) {
             if (conf.isBlockingOutgoingRequest()) {
 
-                LOG.info(">> Blocking call to {}", uri);
-                loggerService.log(LogLevel.INFO, ">> Blocking call to " + uri);
+                loggerService.log(LogLevel.INFO, LOG, ">> Blocking call to {}", uri);
                 DefaultHttpResponse err500 = new DefaultHttpResponse(HttpVersion.HTTP_1_1, HttpResponseStatus.INTERNAL_SERVER_ERROR);
                 err500.headers().set(HttpHeaderNames.CONNECTION, HttpHeaderValues.CLOSE);
                 return err500;
             } else if (conf.getLatencyInMs() > 0) {
                 try {
-                    LOG.info(">> Latency of {} introduced for call to {}", conf.getLatencyInMs(), uri);
-                    loggerService.log(LogLevel.INFO, ">> Latency of " + conf.getLatencyInMs() + " introduced for call to " + uri);
+                    loggerService.log(LogLevel.INFO, LOG, ">> Latency of {} introduced for call to {}", conf.getLatencyInMs(), uri);
                     Thread.sleep(conf.getLatencyInMs());
                     return null;
                 } catch (InterruptedException e) {

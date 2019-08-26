@@ -11,6 +11,9 @@
  */
 package com.agfa.orbis.orme;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 import javax.enterprise.context.ApplicationScoped;
 import javax.inject.Inject;
 import java.util.Collections;
@@ -20,6 +23,8 @@ import java.util.concurrent.CopyOnWriteArrayList;
 
 @ApplicationScoped
 public class ProxyConfigurationService {
+
+    private final static Logger LOG = LoggerFactory.getLogger(ProxyConfigurationService.class);
 
     @Inject
     LoggerService loggerService;
@@ -48,11 +53,15 @@ public class ProxyConfigurationService {
             conf.remove(configuration);
         }
         conf.add(configuration);
-        loggerService.log(LogLevel.INFO, "Proxy configuration added/changed: " + configuration.toString());
+        if (LOG.isInfoEnabled()) {
+            loggerService.log(LogLevel.INFO, LOG, "Proxy configuration added/changed: {}", configuration.toString());
+        }
     }
 
     public void removeConfiguration() {
-        loggerService.log(LogLevel.INFO, "Proxy configuration removed (all entries)");
+        if (LOG.isInfoEnabled()) {
+            loggerService.log(LogLevel.INFO, LOG, "Proxy configuration removed (all entries)");
+        }
         conf.clear();
     }
 }

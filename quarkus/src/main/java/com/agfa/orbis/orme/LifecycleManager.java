@@ -61,14 +61,14 @@ public class LifecycleManager {
                     .withThreadPoolConfiguration(threadPoolConf)
                     .start();
 
-            LOG.info("Bootstrap proxy on {}", server.getListenAddress().toString());
+            loggerService.log(LogLevel.INFO, LOG, "Bootstrap proxy on {}", server.getListenAddress().toString());
 
             loadConfigurationFromFile();
 
-            LOG.info("Chaos Proxy started. Read/Write/Delete configuration via GET|PUT|DELETE /resources/chaos/conf.");
+            loggerService.log(LogLevel.INFO, LOG, "Chaos Proxy started. Read/Write/Delete configuration via GET|PUT|DELETE /resources/chaos/conf.");
 
         } else {
-            LOG.error("Unable to start proxy, invalid port: {}", proxyPort);
+            loggerService.log(LogLevel.ERROR, LOG, "Unable to start proxy, invalid port: {}", proxyPort);
         }
     }
 
@@ -78,16 +78,13 @@ public class LifecycleManager {
             try {
                 ProxyConfiguration proxyConfiguration = JsonbBuilder.create().fromJson(new FileInputStream(configFile), ProxyConfiguration.class);
                 if (proxyConfiguration.isValid()) {
-                    LOG.info("Load config file from {}", configFile);
-                    loggerService.log(LogLevel.INFO, "Load config file from " + configFile);
+                    loggerService.log(LogLevel.INFO, LOG, "Load config file from {}", configFile);
                     configurationService.setConfiguration(proxyConfiguration);
                 } else {
-                    LOG.warn("Unable to load configuration file {}, error: invalid configuration", configFile);
-                    loggerService.log(LogLevel.WARN, MessageFormatter.format("Unable to load configuration file {}, error: invalid configuration", configFile).getMessage());
+                    loggerService.log(LogLevel.WARN, LOG, "Unable to load configuration file {}, error: invalid configuration", configFile);
                 }
             } catch (Exception e) {
-                LOG.warn("Unable to load configuration file {}, error: {}", configFile, e.getMessage());
-                loggerService.log(LogLevel.WARN, MessageFormatter.format("Unable to load configuration file {}, error: {}", configFile, e.getMessage()).getMessage());
+                loggerService.log(LogLevel.WARN, LOG, "Unable to load configuration file {}, error: {}", configFile, e.getMessage());
             }
         }
     }
