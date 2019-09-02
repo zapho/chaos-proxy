@@ -56,6 +56,7 @@ public class LifecycleManager {
                     .withProxyToServerWorkerThreads(proxyMaxConcurrency);
             server = DefaultHttpProxyServer.bootstrap()
                     .withPort(proxyPort)
+                    .withAllowLocalOnly(false)
                     .withFiltersSource(interceptor)
                     .withThreadPoolConfiguration(threadPoolConf)
                     .start();
