@@ -9,9 +9,9 @@
   <properties>
     <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
     <surefire-plugin.version>2.22.0</surefire-plugin.version>
-    <quarkus.version>0.19.1</quarkus.version>
-    <maven.compiler.source>1.8</maven.compiler.source>
+    <quarkus.version>1.0.0.CR1</quarkus.version>
     <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+    <maven.compiler.source>1.8</maven.compiler.source>
     <maven.compiler.target>1.8</maven.compiler.target>
   </properties>
   <dependencyManagement>
@@ -27,7 +27,6 @@
         <groupId>org.littleshoot</groupId>
         <artifactId>littleproxy</artifactId>
         <version>1.1.2</version>
-        <type>jar</type>
       </dependency>
       <dependency>
         <groupId>com.google.guava</groupId>
@@ -72,10 +71,6 @@
         <groupId>io.quarkus</groupId>
         <artifactId>quarkus-maven-plugin</artifactId>
         <version>${quarkus.version}</version>
-          <configuration>
-              <uberJar>true</uberJar>
-            <finalName>${project.name}</finalName>
-          </configuration>
         <executions>
           <execution>
             <goals>
@@ -83,6 +78,10 @@
             </goals>
           </execution>
         </executions>
+        <configuration>
+          <uberJar>true</uberJar>
+          <finalName>${project.name}</finalName>
+        </configuration>
       </plugin>
       <plugin>
         <artifactId>maven-surefire-plugin</artifactId>
