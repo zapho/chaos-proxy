@@ -42,23 +42,19 @@ public class ProxyResource {
     @GET
     public Response readConfiguration() {
         List<ProxyConfiguration> configurations = configurationService.getConfigurations();
-        Jsonb jsonb = JsonbBuilder.create();
-        String confsAsJson = jsonb.toJson(configurations);
-        return Response.ok(confsAsJson).build();
+        return Response.ok(configurations).build();
     }
 
     @Path("conf")
     @PUT
-    public Response writeConfiguration(String newConf) {
+    public Response writeConfiguration(ProxyConfiguration newConf) {
         if (newConf == null ) {
             return Response.status(Response.Status.BAD_REQUEST).build();
         }
-        Jsonb jsonb = JsonbBuilder.create();
-        ProxyConfiguration proxyConfiguration = jsonb.fromJson(newConf, ProxyConfiguration.class);
-        if (!proxyConfiguration.isValid()) {
+        if (!newConf.isValid()) {
             return Response.status(Response.Status.BAD_REQUEST).build();
         }
-        configurationService.setConfiguration(proxyConfiguration);
+        configurationService.setConfiguration(newConf);
         return Response.ok().build();
     }
 
