@@ -3,7 +3,7 @@
     xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
   <modelVersion>4.0.0</modelVersion>
   <groupId>fr.zapho</groupId>
-  <artifactId>chaos-proxy-quarkus</artifactId>
+  <artifactId>chaos-proxy</artifactId>
   <version>0</version>
   <name>chaos-proxy</name>
   <properties>
