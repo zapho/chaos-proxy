@@ -85,3 +85,8 @@ errorRate | The proportion of HTTP requests sent out to the host that will be ta
 blockOutgoingRequest | One of the actions that may be applied to a targeted host. If applied, this action will immediately block the request from reaching the host and return a 500 response error.<br><br> **If this action is activated, no other actions will be applied**. | false | false
 latencyInMs | One of the actions that may be applied to a targeted host. If applied, this action will add latency to the request before reaching the host. A value of -1 means no latency is applied. | false | -1
 
+# Acknowledgements
+
+All the heavy lifting is done thanks to [LittleProxy](https://github.com/adamfisk/LittleProxy).
+
+Project versioning is handle by [jgitver](https://jgitver.github.io/)
