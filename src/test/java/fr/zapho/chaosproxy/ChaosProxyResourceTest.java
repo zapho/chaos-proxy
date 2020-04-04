@@ -6,13 +6,14 @@ import io.restassured.response.Response;
 import io.restassured.specification.RequestSpecification;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.DisplayNameGeneration;
+import org.junit.jupiter.api.DisplayNameGenerator;
 import org.junit.jupiter.api.Test;
 import org.mockserver.integration.ClientAndServer;
 import org.mockserver.socket.PortFactory;
 
 import static io.restassured.RestAssured.given;
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.hamcrest.Matchers.contains;
 import static org.hamcrest.Matchers.greaterThan;
 import static org.hamcrest.Matchers.is;
 import static org.mockserver.integration.ClientAndServer.startClientAndServer;
@@ -20,6 +21,7 @@ import static org.mockserver.model.HttpRequest.request;
 import static org.mockserver.model.HttpResponse.response;
 
 @QuarkusTest
+@DisplayNameGeneration(DisplayNameGenerator.ReplaceUnderscores.class)
 public class ChaosProxyResourceTest {
 
     private final RequestSpecification proxySpec = new RequestSpecBuilder().setProxy(8888).build();
@@ -44,14 +46,16 @@ public class ChaosProxyResourceTest {
 
         mockServerResponding("/", "GET", 200);
 
+        // @formatter:off
         given()
                 .spec(proxySpec)
-                //                .log().all()
-                .when()
+                // .log().all()
+            .when()
                 .get("http://localhost:" + MOCK_SERVER_PORT)
-                .then()
-                //                .log().all()
+            .then()
+                // .log().all()
                 .statusCode(200);
+        // @formatter:on
     }
 
     @Test
@@ -60,21 +64,26 @@ public class ChaosProxyResourceTest {
 
         mockServerResponding("/", "GET", 200);
 
+        // @formatter:off
         given()
-                .when()
+            .when()
                 .header("Content-Type", "application/json")
                 .body("{ \"host\": \"localhost\",\t\"blockOutgoingRequest\":true }")
                 .put("resources/chaos/conf")
-                .then()
+            .then()
                 .statusCode(200);
+        // @formatter:on
 
+        // @formatter:off
         given()
                 .spec(proxySpec)
-                //                .log().all()
-                .when().get("http://localhost:" + MOCK_SERVER_PORT)
-                .then()
-                //                .log().all()
+                // .log().all()
+            .when()
+                .get("http://localhost:" + MOCK_SERVER_PORT)
+            .then()
+                // .log().all()
                 .statusCode(500);
+        // @formatter:on
     }
 
     @Test
