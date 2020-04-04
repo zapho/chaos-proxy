@@ -1,5 +1,7 @@
 The chaos proxy is a lightweight java-based tool to inject HTTP/network errors between a client and a remote host.
 
+[![Build Status](https://travis-ci.org/zapho/chaos-proxy.svg?branch=master)](https://travis-ci.org/zapho/chaos-proxy)
+
 # Usage
 
 - Start the chaos proxy
