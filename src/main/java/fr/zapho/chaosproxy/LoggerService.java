@@ -63,6 +63,10 @@ public class LoggerService {
         }
     }
 
+    public void cleanLogs() {
+        logs.clear();
+    }
+
     private boolean shouldLog(LogLevel level, Logger logger) {
         switch (level) {
             case TRACE:

@@ -75,4 +75,11 @@ public class ProxyResource {
         return Response.ok(loggerService.getLogs(level)).build();
     }
 
+    @Path("logs")
+    @DELETE
+    public Response cleanLogs() {
+        loggerService.cleanLogs();
+        return Response.ok().build();
+    }
+
 }
