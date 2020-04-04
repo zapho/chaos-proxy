@@ -31,7 +31,7 @@ public class LoggerService {
 
         return logs.stream()
                 .filter(logsWithProperRank)
-                .map(l -> l.message())
+                .map(Log::message)
                 .collect(Collectors.toList());
     }
 
