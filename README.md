@@ -75,6 +75,11 @@ favorite REST tool
     java -DconfigFile=C:/tmp/chaos.conf -jar chaos-proxy-runner.jar
     ```
     where the content of the config file is identical to the configurations shown above.
+  
+  - Authentication: add username & password in the startup configuration to activate authentication
+    ```bash
+    java -Dproxy.username=my-user -Dproxy.password=my-password -jar chaos-proxy-runner.jar
+    ```
     
 # Configuration
 
