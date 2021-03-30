@@ -1,20 +1,11 @@
-/*
- *                  C O P Y R I G H T  (c) 2014
- *     A G F A   H E A L T H C A R E   C O R P O R A T I O N
- *                     All Rights Reserved
- *
- *
- *         THIS IS UNPUBLISHED PROPRIETARY SOURCE CODE OF
- *                       AGFA CORPORATION
- *        The copyright notice above does not evidence any
- *       actual or intended publication of such source code.
- */
 package fr.zapho.chaosproxy;
 
 import io.quarkus.runtime.ShutdownEvent;
 import io.quarkus.runtime.StartupEvent;
 import org.eclipse.microprofile.config.inject.ConfigProperty;
 import org.littleshoot.proxy.HttpProxyServer;
+import org.littleshoot.proxy.HttpProxyServerBootstrap;
+import org.littleshoot.proxy.ProxyAuthenticator;
 import org.littleshoot.proxy.impl.DefaultHttpProxyServer;
 import org.littleshoot.proxy.impl.ThreadPoolConfiguration;
 import org.slf4j.Logger;
@@ -25,6 +16,7 @@ import javax.enterprise.event.Observes;
 import javax.inject.Inject;
 import javax.json.bind.JsonbBuilder;
 import java.io.FileInputStream;
+import java.util.Optional;
 
 @ApplicationScoped
 public class LifecycleManager {
@@ -38,6 +30,12 @@ public class LifecycleManager {
 
     @ConfigProperty(name = "proxy.maxConcurrency")
     int proxyMaxConcurrency;
+
+    @ConfigProperty(name = "proxy.username")
+    Optional<String> usernameConf;
+
+    @ConfigProperty(name = "proxy.password")
+    Optional<String> passwordConf;
 
     @Inject
     HttpChaosInterceptor interceptor;
@@ -54,12 +52,33 @@ public class LifecycleManager {
                     .withClientToProxyWorkerThreads(proxyMaxConcurrency)
                     .withAcceptorThreads(4)
                     .withProxyToServerWorkerThreads(proxyMaxConcurrency);
-            server = DefaultHttpProxyServer.bootstrap()
+            HttpProxyServerBootstrap bootstrap = DefaultHttpProxyServer.bootstrap()
                     .withPort(proxyPort)
                     .withAllowLocalOnly(false)
                     .withFiltersSource(interceptor)
-                    .withThreadPoolConfiguration(threadPoolConf)
-                    .start();
+                    .withThreadPoolConfiguration(threadPoolConf);
+
+            if (usernameConf.isPresent() && passwordConf.isPresent()) {
+                loggerService.log(LogLevel.INFO, LOG, "Authentication activated");
+                final String u = usernameConf.get();
+                final String p = passwordConf.get();
+                if (!u.isEmpty() && !p.isEmpty()) {
+                    ProxyAuthenticator auth = new ProxyAuthenticator() {
+                        @Override
+                        public boolean authenticate(String username, String password) {
+                            return u.equals(username) && p.equals(password);
+                        }
+
+                        @Override
+                        public String getRealm() {
+                            return null;
+                        }
+                    };
+                    bootstrap = bootstrap.withProxyAuthenticator(auth);
+                }
+            }
+
+            server = bootstrap.start();
 
             loggerService.log(LogLevel.INFO, LOG, "Bootstrap proxy on {}", server.getListenAddress().toString());
 
